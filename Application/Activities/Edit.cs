@@ -9,7 +9,7 @@ namespace Application.Activities
     {
         public class Command : IRequest
         {
-            public Activity Acitivty{get;set;}
+            public Activity Activity { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -25,9 +25,11 @@ namespace Application.Activities
 
             public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                var activity = await _context.Activities.FindAsync(request.Acitivty.Id);
+                var activity = await _context.Activities.FindAsync(request.Activity.Id);
 
-                _mapper.Map(request.Acitivty, activity);
+                // _mapper.Map(request.Activity, activity);
+
+                _context.Entry(activity).CurrentValues.SetValues(request.Activity);
 
                 await _context.SaveChangesAsync();
             }
