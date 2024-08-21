@@ -1,18 +1,17 @@
 import React from "react";
 import { Button, Card, Image } from "semantic-ui-react"; // Replace "../path/to/Activites" with the actual path to the 'Activites' type definition file.
-import { Activity } from "../../../app/modules/activity";
+import { useStore } from "../../../app/stores/store";
 
-interface Props {
-  activity: Activity;
-  cancelSelectActivity: () => void;
-  openForm: (id: string) => void;
-}
+export default function ActivityDetails() {
+  const { activityStore } = useStore();
+  const {
+    selectedActivity: activity,
+    openForm,
+    cancelSelectedActivity,
+  } = activityStore;
 
-export default function ActivityDetails({
-  activity,
-  cancelSelectActivity,
-  openForm,
-}: Props) {
+  if (!activity) return;
+
   return (
     <Card>
       <Image src={`/assets/categoryImages/${activity.category}.jpg`} />
@@ -34,7 +33,7 @@ export default function ActivityDetails({
             content="Edit"
           />
           <Button
-            onClick={cancelSelectActivity}
+            onClick={cancelSelectedActivity}
             basic
             color="blue"
             content="Cancel"
