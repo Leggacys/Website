@@ -17,7 +17,6 @@
 //   },
 // }
 
-
 /**
  * This is intended to be a basic starting point for linting in your app.
  * It relies on recommended configs out of the box for simplicity, but you can
@@ -87,9 +86,10 @@ module.exports = {
         },
       },
       extends: [
-        "plugin:@typescript-eslint/recommended",
-        "plugin:import/recommended",
-        "plugin:import/typescript",
+        "plugin:react/recommended",
+        "plugin:react/jsx-runtime",
+        "eslint-plugin-react",
+        "plugin:react-hooks/recommended",
       ],
     },
 
