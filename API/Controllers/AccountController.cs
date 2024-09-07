@@ -35,6 +35,7 @@ namespace API.Controllers
 
       if (user == null)
       {
+        Console.WriteLine("User not found");
         return Unauthorized();
       }
 
@@ -53,9 +54,25 @@ namespace API.Controllers
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDTOs registerDTOs)
     {
+      if (await _userManager.Users.AnyAsync(x => x.Email == registerDTOs.Email))
+      {
+        ModelState.AddModelError("email", "Email taken");
+        return ValidationProblem();
+      }
+      else
+      {
+        Console.WriteLine("Email is available");
+      }
+
+
       if (await _userManager.Users.AnyAsync(x => x.UserName == registerDTOs.Username))
       {
-        return BadRequest("Username taken");
+        ModelState.AddModelError("username", "Username taken");
+        return ValidationProblem();
+      }
+      else
+      {
+        Console.WriteLine("Username is available");
       }
 
       var user = new AppUser
